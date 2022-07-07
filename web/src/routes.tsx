@@ -1,4 +1,4 @@
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter, Routes as ReactRoutes } from 'react-router-dom';
 import React from 'react';
 
 import Home from './pages/Home'
@@ -7,8 +7,10 @@ import CreatePoint from './pages/CreatePoint'
 const Routes = () => {
     return (
         <BrowserRouter>
-            <Route component={Home} path="/" exact/>
-            <Route component={CreatePoint} path="/create-point"/>
+            <ReactRoutes>
+                <Route element={<Home />} path="/" index={false} />
+                <Route element={<CreatePoint />} path="/create-point" />
+            </ReactRoutes>
         </BrowserRouter>
     )
 }
