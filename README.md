@@ -27,6 +27,9 @@ yarn start
 yarn test
 ```
 
+Implements jenkins for build and publish
+
+
 ## Author
 
 👤 **Jailton Cruz**
