@@ -2,7 +2,7 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi'
 import { TileLayer, Marker, MapContainer } from 'react-leaflet';
-import { LeafletMouseEvent } from 'leaflet'
+// import { LeafletMouseEvent } from 'leaflet'
 import axios from 'axios';
 import api from '../../services/api'
 
@@ -42,7 +42,7 @@ const CreatePoint = () => {
     const [selectedUf, setSelectedUf] = useState('0');
     const [selectedCity, setSelectedCity] = useState('0');
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
-    const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
+    const [selectedPosition] = useState<[number, number]>([0, 0]);
     const [selectedFile, setSelectedFile] = useState<File>();
 
     const navigate = useNavigate();
@@ -91,11 +91,11 @@ const CreatePoint = () => {
         setSelectedCity(city);
     }
 
-    function handleMapClick(event: LeafletMouseEvent) {
-        setSelectedPosition([
-            event.latlng.lat, event.latlng.lng
-        ])
-    }
+    // function handleMapClick(event: LeafletMouseEvent) {
+    //     setSelectedPosition([
+    //         event.latlng.lat, event.latlng.lng
+    //     ])
+    // }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target
