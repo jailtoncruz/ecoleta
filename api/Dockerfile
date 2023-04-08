@@ -1,5 +1,7 @@
 FROM node:18-alpine
 
+WORKDIR /srv/ecoleta
+
 COPY dist/ dist/
 COPY package.json package.json
 
