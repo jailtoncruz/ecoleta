@@ -11,7 +11,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY ./web/build /var/www
 COPY ./api/dist /var/api
 COPY ./api/package.json /var/api
-COPY ./api/upload /var/api
+COPY ./api/uploads /var/api
 COPY startup.sh .
 
 # Install dependencies
