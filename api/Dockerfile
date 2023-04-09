@@ -4,6 +4,7 @@ WORKDIR /srv/ecoleta
 
 COPY dist/ dist/
 COPY package.json package.json
+COPY uploads uploads
 
 ENV NODE_ENV=production
 
