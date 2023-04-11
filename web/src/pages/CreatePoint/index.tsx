@@ -134,7 +134,7 @@ const CreatePoint = () => {
         }
 
         await api.post('points', data);
-
+        alert("Ponto cadastrado com sucesso!")
         navigate('/')
     }
 

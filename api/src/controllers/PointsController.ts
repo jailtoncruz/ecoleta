@@ -1,5 +1,6 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import knex from '../database/connection';
+import { API_URL } from '../core/constants/environments';
 
 class PointsController {
     async create(req: Request, res: Response) {
@@ -34,8 +35,9 @@ class PointsController {
         });
     }
 
-    async show(req: Request, res: Response) {
-        const { id } = req.params;
+    async show(req: Request, res: Response, next: NextFunction) {
+        const { id } = req.params
+        if (isNaN(Number(id))) next()
         const point = await knex('points').where('id', id).first();
 
         if (!point) {
@@ -44,10 +46,10 @@ class PointsController {
 
         const serializedPoints = {
             ...point,
-            image_url: `http://192.168.0.10:3333/uploads/${point.image}`
+            image_url: `${API_URL}/uploads/${point.image}`
         };
 
-        return res.json(serializedPoints);
+        // return res.json(serializedPoints);
 
         const items = await knex('items')
             .join('point_items', 'items.id', '=', 'point_items.item_id')
@@ -73,7 +75,7 @@ class PointsController {
         const serializedPoints = points.map(point => {
             return {
                 ...point,
-                image_url: `http://192.168.0.10:3333/uploads/${point.image}`,
+                image_url: `${API_URL}/uploads/${point.image}`,
             };
         });
 
