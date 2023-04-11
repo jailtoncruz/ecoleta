@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", routes);
 
-app.use('/api/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
+app.use('/api/uploads', express.static(path.resolve(process.cwd(), '..', 'uploads')));
 
 app.use(errors());
 

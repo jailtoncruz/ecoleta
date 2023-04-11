@@ -2,7 +2,6 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi'
 import { TileLayer, Marker, MapContainer } from 'react-leaflet';
-// import { LeafletMouseEvent } from 'leaflet'
 import axios from 'axios';
 import api from '../../services/api'
 
@@ -11,6 +10,7 @@ import Dropzone from '../../components/Dropzone'
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
+import { MapEvents } from '../../components/MapEvents';
 
 interface Item {
     id: number;
@@ -31,7 +31,7 @@ const CreatePoint = () => {
     const [items, setItems] = useState<Item[]>([]);
     const [cities, setCities] = useState<string[]>([]);
 
-    const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
+    const [initialPosition, setInitialPosition] = useState<[number, number]>();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -42,7 +42,7 @@ const CreatePoint = () => {
     const [selectedUf, setSelectedUf] = useState('0');
     const [selectedCity, setSelectedCity] = useState('0');
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
-    const [selectedPosition] = useState<[number, number]>([0, 0]);
+    const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
     const [selectedFile, setSelectedFile] = useState<File>();
 
     const navigate = useNavigate();
@@ -90,12 +90,6 @@ const CreatePoint = () => {
 
         setSelectedCity(city);
     }
-
-    // function handleMapClick(event: LeafletMouseEvent) {
-    //     setSelectedPosition([
-    //         event.latlng.lat, event.latlng.lng
-    //     ])
-    // }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target
@@ -193,14 +187,21 @@ const CreatePoint = () => {
                         <span>Selecione o endereço no mapa</span>
                     </legend>
 
-                    {/*  onClick={handleMapClick} */}
-                    <MapContainer center={initialPosition} zoom={15}>
-                        <TileLayer
-                            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <Marker position={selectedPosition} />
-                    </MapContainer>
+                    {initialPosition ?
+                        <MapContainer center={initialPosition} zoom={15} >
+                            <MapEvents onClick={(event, map) => {
+                                map.locate();
+                                setSelectedPosition([event.latlng.lat, event.latlng.lng])
+                            }}
+
+                            />
+                            <TileLayer
+                                attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            <Marker position={selectedPosition} />
+                        </MapContainer> : <div></div>
+                    }
 
                     <div className="field-group">
                         <div className="field">
