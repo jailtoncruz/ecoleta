@@ -62,7 +62,8 @@ class PointsController {
     async index(req: Request, res: Response) {
         const { city, uf, items } = req.query;
 
-        const parsedItems = String(items).split(',').map(item => Number(item.trim()));
+        const parsedItems = String(items).split(',').map(item => Number(item.trim()))
+            .filter(e => !isNaN(e))
 
         const points = await knex('points')
             .join('point_items', 'points.id', '=', 'point_items.point_id')
@@ -71,6 +72,7 @@ class PointsController {
             .where('uf', String(uf))
             .distinct()
             .select('points.*');
+
 
         const serializedPoints = points.map(point => {
             return {

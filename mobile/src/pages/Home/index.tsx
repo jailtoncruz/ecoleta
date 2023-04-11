@@ -18,17 +18,17 @@ const Home = () => {
   }
 
   return (
-    <KeyboardAvoidingView  style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined }>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
 
-      <ImageBackground 
-      source={require('../../assets/home-background.png')} 
-      style={styles.container}
-      imageStyle={{
-        width: 274, height: 368
-      }}
+      <ImageBackground
+        source={require('../../assets/home-background.png')}
+        style={styles.container}
+        imageStyle={{
+          width: 274, height: 368
+        }}
       >
         <View style={styles.main}>
-          <Image source={require('../../assets/logo.png')}/>
+          <Image source={require('../../assets/logo.png')} />
           <View>
             <Text style={styles.title}>Seu marketplace de coleta de resíduos</Text>
             <Text style={styles.description}>Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.</Text>
@@ -37,28 +37,30 @@ const Home = () => {
 
         <View style={styles.footer}>
 
-          <TextInput 
-          style={styles.input} 
-          placeholder="Digite a UF"
-          value={uf}
-          maxLength={2}
-          autoCapitalize="characters"
-          autoCorrect={false}
-          onChangeText={setUf}
+          <TextInput
+            style={[styles.input, {
+              shadowColor: "blue"
+            }]}
+            placeholder="Digite a UF"
+            value={uf}
+            maxLength={2}
+            autoCapitalize="characters"
+            autoCorrect={false}
+            onChangeText={setUf}
           />
 
-          <TextInput 
-          style={styles.input}
-          placeholder="Digite a Cidade"
-          value={city}
-          autoCorrect={false}
-          onChangeText={setCity}
+          <TextInput
+            style={styles.input}
+            placeholder="Digite a Cidade"
+            value={city}
+            autoCorrect={false}
+            onChangeText={setCity}
           />
 
           <RectButton style={styles.button} onPress={handleNavigateToPoints}>
             <View style={styles.buttonIcon}>
               <Text>
-                <Icon name="arrow-right" color="#FFF" size={24}/>
+                <Icon name="arrow-right" color="#FFF" size={24} />
               </Text>
             </View>
             <Text style={styles.buttonText}>
@@ -69,14 +71,14 @@ const Home = () => {
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
-    )
+  )
 }
 
 export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     padding: 32,
   },
 
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 8,
     paddingHorizontal: 24,
-    fontSize: 16,
+    fontSize: 16
   },
 
   button: {
