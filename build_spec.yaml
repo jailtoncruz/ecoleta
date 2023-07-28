@@ -36,8 +36,8 @@ steps:
     failImmediatelyOnError: true
     command: |
       cd api 
-      npm run migrate:deploy 
-      npm run seed
+      npm run knex:migrate 
+      npm run knex:seed
 
   - type: Command
     name: "Generate API build"
