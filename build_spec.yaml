@@ -37,12 +37,17 @@ steps:
     command: |
       cd api 
       npm run migrate:deploy 
-     npm run seed
+      npm run seed
 
   - type: Command
-    name: "Generate build"
+    name: "Generate API build"
     failImmediatelyOnError: true
     command: cd api && npm run build
+
+  - type: Command
+    name: "Generate WEB build"
+    failImmediatelyOnError: true
+    command: cd web && npm run build
 
   - type: Command
     name: "Build docker image"
