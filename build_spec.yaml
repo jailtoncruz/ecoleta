@@ -20,9 +20,14 @@ steps:
       cp ~/.npmrc api/.
 
   - type: Command
-    name: "Install dependencies"
+    name: "Install dependencies API"
     failImmediatelyOnError: true
     command: cd api && npm install
+
+  - type: Command
+    name: "Install dependencies Web"
+    failImmediatelyOnError: true
+    command: cd web && npm install
 
   # - type: Command
   #   name: "Create .env.test and .env"
