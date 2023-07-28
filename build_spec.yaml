@@ -1,0 +1,51 @@
+version: 0.1
+component: build
+
+env:
+  vaultVariables:
+    GITHUB_SECRET: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaot7h4tpsamfr2p7r4xilmanw2penqdgdoh63m272m6dq
+    TEST_DATABASE_URL: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyafz62hqaorskmmljl55duot2ca34tu3yovrn64lwkvqgq
+
+steps:
+  - type: Command
+    name: "Login Github"
+    failImmediatelyOnError: true
+    command: |
+      printf "//npm.pkg.github.com/:_authToken=${GITHUB_SECRET}\n@jailtoncruz:registry=https://npm.pkg.github.com/" > ~/.npmrc
+      cp ~/.npmrc api/.
+
+  - type: Command
+    name: "Install dependencies"
+    failImmediatelyOnError: true
+    command: cd api && npm install
+
+  - type: Command
+    name: "Create .env.test and .env"
+    failImmediatelyOnError: true
+    command: |
+      printf "JWT_SECRET=${TEST_JWT_SECRET}\nDATABASE_URL=${TEST_DATABASE_URL}\n" > api/.env.test
+      cp api/.env.test api/.env
+
+  - type: Command
+    name: "Run migrations and seed on the test database"
+    failImmediatelyOnError: true
+    command: |
+      cd api 
+      DATABASE_URL=${TEST_DATABASE_URL} npm run migrate:deploy 
+      DATABASE_URL=${TEST_DATABASE_URL} npm run seed
+
+  - type: Command
+    name: "Generate build"
+    failImmediatelyOnError: true
+    command: cd api && npm run build
+
+  - type: Command
+    name: "Build docker image"
+    failImmediatelyOnError: true
+    timeoutInSeconds: 300
+    command: docker build -t sa-saopaulo-1.ocir.io/grbcvhus1oua/ecoleta/app
+
+outputArtifacts:
+  - name: api-docker-image
+    type: DOCKER_IMAGE
+    location: sa-saopaulo-1.ocir.io/grbcvhus1oua/ecoleta/app
