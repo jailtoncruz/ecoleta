@@ -4,7 +4,12 @@ component: build
 env:
   vaultVariables:
     GITHUB_SECRET: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaot7h4tpsamfr2p7r4xilmanw2penqdgdoh63m272m6dq
-    TEST_DATABASE_URL: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyafz62hqaorskmmljl55duot2ca34tu3yovrn64lwkvqgq
+    API_URL: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyau4v64dadysnv453vhjhnlfpgs5g6uhe2yhldk7ciazdq
+    DB_DATABASE: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaw7i3wunmlplx6pweeaptkezr6etvckxktbptrmfa5ctq
+    DB_PASSWORD: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaaiatozcy3yadcfpmznf4fgho232hjokx7whqhw7mheoq
+    DB_USER: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwya77qibgq2zesdfpcwswsqilhv3ohjbftz2e2fh6le6szq
+    DB_PORT: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyavmphu4wuy2yvbg5kodranbfxodklpxhar5jqfpnf6bzq
+    DB_HOST: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyastbgl6fq7sgeclbib5jixs5kn3avv3g2bkcr67mlfyza
 
 steps:
   - type: Command
@@ -23,7 +28,7 @@ steps:
     name: "Create .env.test and .env"
     failImmediatelyOnError: true
     command: |
-      printf "JWT_SECRET=${TEST_JWT_SECRET}\nDATABASE_URL=${TEST_DATABASE_URL}\n" > api/.env.test
+      printf "DB_HOST=${DB_HOST}\nDB_PORT=${DB_PORT}\nDB_USER=${DB_USER}\nDB_PASSWORD=${DB_PASSWORD}\nDB_DATABASE=${DB_DATABASE}\nAPI_URL=${API_URL}" > api/.env.test
       cp api/.env.test api/.env
 
   - type: Command
@@ -31,8 +36,8 @@ steps:
     failImmediatelyOnError: true
     command: |
       cd api 
-      DATABASE_URL=${TEST_DATABASE_URL} npm run migrate:deploy 
-      DATABASE_URL=${TEST_DATABASE_URL} npm run seed
+      npm run migrate:deploy 
+     npm run seed
 
   - type: Command
     name: "Generate build"
