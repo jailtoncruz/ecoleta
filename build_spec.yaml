@@ -4,6 +4,7 @@ component: build
 env:
   vaultVariables:
     GITHUB_SECRET: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaot7h4tpsamfr2p7r4xilmanw2penqdgdoh63m272m6dq
+    DOCKER_TOKEN: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaf5dcxcff5tkzc5y46eae3f6r7yjmjlvjygwrlcs4bigq
     # API_URL: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyau4v64dadysnv453vhjhnlfpgs5g6uhe2yhldk7ciazdq
     # DB_DATABASE: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaw7i3wunmlplx6pweeaptkezr6etvckxktbptrmfa5ctq
     # DB_PASSWORD: ocid1.vaultsecret.oc1.sa-saopaulo-1.amaaaaaanfeltwyaaiatozcy3yadcfpmznf4fgho232hjokx7whqhw7mheoq
@@ -18,6 +19,13 @@ steps:
     command: |
       printf "//npm.pkg.github.com/:_authToken=${GITHUB_SECRET}\n@jailtoncruz:registry=https://npm.pkg.github.com/" > ~/.npmrc
       cp ~/.npmrc api/.
+
+  - type: Command
+    name: "Login docker"
+    failImmediatelyOnError: true
+    command: |
+      printf "${DOCKER_TOKEN}" > token
+      cat token | docker login --username grbcvhus1oua/docker@tomcruz.dev --password-stdin sa-saopaulo-1.ocir.io
 
   - type: Command
     name: "Install dependencies API"
