@@ -26,6 +26,7 @@ steps:
 
   - type: Command
     name: "Install dependencies Web"
+    timeoutInSeconds: 180
     failImmediatelyOnError: true
     command: cd web && npm install
 
