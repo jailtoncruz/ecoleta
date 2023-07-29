@@ -1,0 +1,17 @@
+FROM nginx
+
+ENV NODE_ENV=production
+
+RUN apt-get update -y && apt-get upgrade -y
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
+RUN apt-get install -y nodejs
+
+COPY startup.sh .
+
+# Ajust date
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Brazil/East /etc/localtime
+
+RUN chmod +x startup.sh
+
+ENTRYPOINT ["./startup.sh"]
