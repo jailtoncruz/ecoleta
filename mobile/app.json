@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "ecoleta",
+    "slug": "ecoleta",
     "platforms": [
       "ios",
       "android",
@@ -22,7 +22,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "y"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8a4d1868-c3f6-428c-86a8-e4be7951e1ad"
+      }
     }
   }
 }
